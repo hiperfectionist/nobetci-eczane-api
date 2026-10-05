@@ -103,18 +103,21 @@ abstract class BaseScraper
             return array_values($pharmacies);
         }
 
-        $filtered = [];
+        $districtMatches = [];
+        $fallbackMatches = [];
+
         foreach ($pharmacies as $p) {
-            if (
-                Str::contains($p['district'], $district) ||
+            if (!empty($p['district']) && Str::contains($p['district'], $district)) {
+                $districtMatches[] = $p;
+            } elseif (
                 Str::contains($p['address'], $district) ||
                 Str::contains($p['directions'], $district)
             ) {
-                $filtered[] = $p;
+                $fallbackMatches[] = $p;
             }
         }
 
-        return array_values($filtered);
+        return !empty($districtMatches) ? array_values($districtMatches) : array_values($fallbackMatches);
     }
 
     /**
