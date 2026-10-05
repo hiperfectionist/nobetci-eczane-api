@@ -36,8 +36,9 @@ abstract class BaseScraper
      */
     protected function createPharmacy(array $item): array
     {
-        $name = Str::clean($item['name'] ?? '');
-        $name = preg_replace('/\s+/u', ' ', $name);
+        $name = trim(Str::clean($item['name'] ?? ''));
+        // Strip duplicate "ECZANESİ ECZANESİ"
+        $name = preg_replace('/\s+(?:ECZANESİ|Eczanesi)\s+(?:ECZANESİ|Eczanesi)$/iu', ' Eczanesi', $name);
         // Ensure "ECZANESİ" or "Eczanesi" is formatted nicely
         if (!preg_match('/(?:ECZANESİ|Eczanesi|ECZANE|Eczane)$/iu', $name)) {
             $name .= ' Eczanesi';
