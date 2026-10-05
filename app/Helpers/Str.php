@@ -56,8 +56,11 @@ class Str
     /**
      * Check if needle is loosely in haystack (case-insensitive & Turkish character normalized)
      */
-    public static function contains(string $haystack, string $needle): bool
+    public static function contains(?string $haystack, ?string $needle): bool
     {
+        if ($haystack === null || $needle === null) {
+            return false;
+        }
         $hSlug = self::slug($haystack);
         $nSlug = self::slug($needle);
         if ($nSlug === '') {

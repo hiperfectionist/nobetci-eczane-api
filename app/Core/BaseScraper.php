@@ -110,8 +110,8 @@ abstract class BaseScraper
             if (!empty($p['district']) && Str::contains($p['district'], $district)) {
                 $districtMatches[] = $p;
             } elseif (
-                Str::contains($p['address'], $district) ||
-                Str::contains($p['directions'], $district)
+                (!empty($p['address']) && Str::contains($p['address'], $district)) ||
+                (!empty($p['directions']) && Str::contains($p['directions'], $district))
             ) {
                 $fallbackMatches[] = $p;
             }
@@ -159,6 +159,49 @@ abstract class BaseScraper
         }
 
         // Fix encoding if windows-1254 or ISO-8859-9
+        if (preg_match('/charset=["\']?(windows-1254|iso-8859-9)/i', $response)) {
+            $converted = @iconv('windows-1254', 'UTF-8//IGNORE', $response);
+            if ($converted !== false) {
+                $response = $converted;
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * HTTP POST with modern desktop browser headers
+     */
+    protected function postHtml(string $url, array|string $postData, array $customHeaders = [], int $timeout = 10): string
+    {
+        $ch = curl_init($url);
+        $headers = array_merge([
+            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+            'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language: tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+        ], $customHeaders);
+
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => is_array($postData) ? http_build_query($postData) : $postData,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 5,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_TIMEOUT        => $timeout,
+            CURLOPT_CONNECTTIMEOUT => 6,
+            CURLOPT_HTTPHEADER     => $headers,
+            CURLOPT_ENCODING       => ''
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if (!$response) {
+            return '';
+        }
+
         if (preg_match('/charset=["\']?(windows-1254|iso-8859-9)/i', $response)) {
             $converted = @iconv('windows-1254', 'UTF-8//IGNORE', $response);
             if ($converted !== false) {
