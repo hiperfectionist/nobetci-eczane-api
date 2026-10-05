@@ -24,7 +24,7 @@ class CityRegistry
         12 => ['name' => 'Bingöl', 'file' => 'Bingol.php', 'class' => 'BingolScraper', 'url' => 'https://www.elazigeczaciodasi.org.tr/nobetci-eczaneler/bingol'],
         13 => ['name' => 'Bitlis', 'file' => 'Bitlis.php', 'class' => 'BitlisScraper', 'url' => 'https://www.bitlisecza.org.tr/nobetci-eczaneler'],
         14 => ['name' => 'Bolu', 'file' => 'Bolu.php', 'class' => 'BoluScraper', 'url' => 'https://seobit.org.tr/nobetci-eczaneler'],
-        15 => ['name' => 'Burdur', 'file' => 'Burdur.php', 'class' => 'BurdurScraper', 'url' => 'https://www.burdureo.org.tr/'],
+        15 => ['name' => 'Burdur', 'file' => 'Burdur.php', 'class' => 'BurdurScraper', 'url' => 'https://www.burdureo.org.tr/nobetci-eczaneler'],
         16 => ['name' => 'Bursa', 'file' => 'Bursa.php', 'class' => 'BursaScraper', 'url' => 'https://www.bursaecza.org.tr/'],
         17 => ['name' => 'Çanakkale', 'file' => 'Canakkale.php', 'class' => 'CanakkaleScraper', 'url' => 'https://www.canakkaleeo.org.tr/'],
         18 => ['name' => 'Çankırı', 'file' => 'Cankiri.php', 'class' => 'CankiriScraper', 'url' => 'https://www.cankirieczaciodasi.org.tr/'],
