@@ -22,7 +22,7 @@ class CityRegistry
         10 => ['name' => 'Balıkesir', 'file' => 'Balikesir.php', 'class' => 'BalikesirScraper', 'url' => 'https://www.balikesireczaciodasi.org.tr/nobetci-eczaneler'],
         11 => ['name' => 'Bilecik', 'file' => 'Bilecik.php', 'class' => 'BilecikScraper', 'url' => 'https://www.eskisehireo.org.tr/bilecik-nobetci-eczaneler'],
         12 => ['name' => 'Bingöl', 'file' => 'Bingol.php', 'class' => 'BingolScraper', 'url' => 'https://www.elazigeczaciodasi.org.tr/nobetci-eczaneler/bingol'],
-        13 => ['name' => 'Bitlis', 'file' => 'Bitlis.php', 'class' => 'BitlisScraper', 'url' => 'https://www.bitliseo.org.tr/'],
+        13 => ['name' => 'Bitlis', 'file' => 'Bitlis.php', 'class' => 'BitlisScraper', 'url' => 'https://www.bitlisecza.org.tr/nobetci-eczaneler'],
         14 => ['name' => 'Bolu', 'file' => 'Bolu.php', 'class' => 'BoluScraper', 'url' => 'https://www.bolueo.org.tr/'],
         15 => ['name' => 'Burdur', 'file' => 'Burdur.php', 'class' => 'BurdurScraper', 'url' => 'https://www.burdureo.org.tr/'],
         16 => ['name' => 'Bursa', 'file' => 'Bursa.php', 'class' => 'BursaScraper', 'url' => 'https://www.bursaecza.org.tr/'],
