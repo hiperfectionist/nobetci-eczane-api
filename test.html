@@ -185,15 +185,15 @@
 
         <div class="stats-bar">
             <div class="stat-card">📌 Toplam İl: <span class="stat-val" id="totalCount">81</span></div>
-            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">45</span></div>
-            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">36</span></div>
+            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">51</span></div>
+            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">30</span></div>
         </div>
 
         <div class="filter-controls">
             <div class="btn-group">
                 <button class="filter-btn active" onclick="setFilter('all', this)">Tümü (81)</button>
-                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Doğrulanan / Düzeltilen (45)</button>
-                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (36)</button>
+                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Doğrulanan / Düzeltilen (51)</button>
+                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (30)</button>
             </div>
             <input type="text" id="searchInput" class="search-box" placeholder="İl veya plaka ara (örn: Adana, 34)..." onkeyup="applyFilters()">
         </div>
@@ -313,20 +313,20 @@
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Siirt" target="_blank"><span class="plate">56</span><span class="name">Siirt</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 57 -->
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sinop" target="_blank"><span class="plate">57</span><span class="name">Sinop</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 58 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sivas" target="_blank"><span class="plate">58</span><span class="name">Sivas</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 59 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Tekirdağ" target="_blank"><span class="plate">59</span><span class="name">Tekirdağ</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 60 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Tokat" target="_blank"><span class="plate">60</span><span class="name">Tokat</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 61 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Trabzon" target="_blank"><span class="plate">61</span><span class="name">Trabzon</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 58 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Sivas" target="_blank"><span class="plate">58</span><span class="name">Sivas</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 59 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Tekirdağ" target="_blank"><span class="plate">59</span><span class="name">Tekirdağ</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 60 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Tokat" target="_blank"><span class="plate">60</span><span class="name">Tokat</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 61 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Trabzon" target="_blank"><span class="plate">61</span><span class="name">Trabzon</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
             <!-- 62 DÜZELTİLDİ -->
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Tunceli" target="_blank"><span class="plate">62</span><span class="name">Tunceli</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
-            <!-- 63 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Şanlıurfa" target="_blank"><span class="plate">63</span><span class="name">Şanlıurfa</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 64 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Uşak" target="_blank"><span class="plate">64</span><span class="name">Uşak</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 63 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Şanlıurfa" target="_blank"><span class="plate">63</span><span class="name">Şanlıurfa</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 64 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Uşak" target="_blank"><span class="plate">64</span><span class="name">Uşak</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 65 -->
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Van" target="_blank"><span class="plate">65</span><span class="name">Van</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
             <!-- 66 -->
