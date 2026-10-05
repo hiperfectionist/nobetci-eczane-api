@@ -20,7 +20,7 @@ class CityRegistry
         8  => ['name' => 'Artvin', 'file' => 'Artvin.php', 'class' => 'ArtvinScraper', 'url' => 'https://www.trabzoneczaciodasi.org.tr/nobetci-eczaneler/8'],
         9  => ['name' => 'Aydın', 'file' => 'Aydin.php', 'class' => 'AydinScraper', 'url' => 'https://www.aydineczaciodasi.org.tr/2nobetci-eczaneler'],
         10 => ['name' => 'Balıkesir', 'file' => 'Balikesir.php', 'class' => 'BalikesirScraper', 'url' => 'https://www.balikesireczaciodasi.org.tr/nobetci-eczaneler'],
-        11 => ['name' => 'Bilecik', 'file' => 'Bilecik.php', 'class' => 'BilecikScraper', 'url' => 'https://www.bilecikeo.org.tr/'],
+        11 => ['name' => 'Bilecik', 'file' => 'Bilecik.php', 'class' => 'BilecikScraper', 'url' => 'https://www.eskisehireo.org.tr/bilecik-nobetci-eczaneler'],
         12 => ['name' => 'Bingöl', 'file' => 'Bingol.php', 'class' => 'BingolScraper', 'url' => 'https://www.bingoleo.org.tr/'],
         13 => ['name' => 'Bitlis', 'file' => 'Bitlis.php', 'class' => 'BitlisScraper', 'url' => 'https://www.bitliseo.org.tr/'],
         14 => ['name' => 'Bolu', 'file' => 'Bolu.php', 'class' => 'BoluScraper', 'url' => 'https://www.bolueo.org.tr/'],
