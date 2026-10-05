@@ -9,34 +9,83 @@ class ZonguldakScraper extends BaseScraper
 {
     protected string $cityName = 'Zonguldak';
     protected int $plateCode = 67;
-    protected string $primaryUrl = 'https://www.zonguldakeo.org.tr/';
-    protected array $fallbackUrls = array (
-  0 => 'https://zonguldakeo.org.tr/',
-  1 => 'https://zonguldakeo.org.tr/nobetci-eczaneler',
-  2 => 'https://www.zonguldakeo.org.tr/nobetci-eczaneler',
-);
+    protected string $primaryUrl = 'https://www.zeo.org.tr/nobetci-eczaneler';
 
     public function scrape(?string $district = null): array
     {
         $html = $this->fetchHtml($this->primaryUrl);
-
-        if (empty($html)) {
-            foreach ($this->fallbackUrls as $fallback) {
-                $html = $this->fetchHtml($fallback);
-                if (!empty($html)) {
-                    break;
-                }
-            }
-        }
-
         if (empty($html)) {
             return [];
         }
 
-        $pharmacies = $this->parseTebCards($html, $district);
+        $pharmacies = [];
+
+        if (preg_match_all('/<div[^>]*class=["\'][^"\']*nobetci[^"\']*["\'][^>]*>(.*?)<\/div>\s*<\/div>/is', $html, $cards)) {
+            foreach ($cards[1] as $cardBody) {
+                $name = '';
+                if (preg_match('/<h4[^>]*class=["\']tred["\'][^>]*>\s*<strong[^>]*>(.*?)<\/strong>\s*<\/h4>/is', $cardBody, $mH4)) {
+                    $name = trim(strip_tags($mH4[1]));
+                } elseif (preg_match('/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', $cardBody, $mH)) {
+                    $name = trim(strip_tags($mH[1]));
+                }
+
+                $name = preg_replace('/(\s+ECZANES[İI]|\s+ECZANE)$/ui', '', $name);
+                if (empty($name) || $this->isBlacklistedTitle($name)) {
+                    continue;
+                }
+
+                $distName = '';
+                if (preg_match('/<p[^>]*>\s*<strong[^>]*>(.*?)<\/strong>/is', $cardBody, $mDist)) {
+                    $distRaw = trim(strip_tags($mDist[1]));
+                    $distRaw = preg_replace('/^ZONGULDAK\s*-\s*/ui', '', $distRaw);
+                    $distName = Str::titleTr(trim($distRaw));
+                }
+
+                // Hours
+                $hours = '';
+                if (preg_match('/<i class=["\']fa fa-clock-o[^\'"]*["\']><\/i>\s*<span[^>]*>(.*?)<\/span>/is', $cardBody, $mHours)) {
+                    $hours = trim(strip_tags($mHours[1]));
+                }
+
+                // Address
+                $address = '';
+                if (preg_match('/<i class=[\'"]fa fa-home[^\'"]*[\'"]><\/i>\s*([^<]+)/i', $cardBody, $mAddr)) {
+                    $address = trim($mAddr[1]);
+                }
+
+                // Phone
+                $phone = '';
+                if (preg_match('/href=["\']tel:([^"\']+)["\']/i', $cardBody, $mPhone)) {
+                    $phone = trim($mPhone[1]);
+                }
+
+                // Maps & coords
+                $maps = null;
+                $lat = null;
+                $lng = null;
+                if (preg_match('/href=["\'](https?:\/\/[^"\']*maps[^"\']*)["\']/i', $cardBody, $mMaps)) {
+                    $maps = html_entity_decode($mMaps[1]);
+                    if (preg_match('/q=([0-9.]+)(?:,|%2C|\+)+([0-9.]+)/i', $maps, $mCoords)) {
+                        $lat = (float) $mCoords[1];
+                        $lng = (float) $mCoords[2];
+                    }
+                }
+
+                $pharmacies[] = $this->createPharmacy([
+                    'name'       => $name,
+                    'district'   => $distName,
+                    'address'    => $address,
+                    'phone'      => $phone,
+                    'duty_hours' => $hours,
+                    'latitude'   => $lat,
+                    'longitude'  => $lng,
+                    'map_url'    => $maps
+                ]);
+            }
+        }
 
         if (empty($pharmacies)) {
-            $pharmacies = $this->parseHeuristicCards($html, $district);
+            $pharmacies = $this->parseTebCards($html, $district);
         }
 
         return $this->filterPharmacies($pharmacies, $district);
