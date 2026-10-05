@@ -74,7 +74,7 @@ class CityRegistry
         62 => ['name' => 'Tunceli', 'file' => 'Tunceli.php', 'class' => 'TunceliScraper', 'url' => 'https://www.elazigeczaciodasi.org.tr/nobetci-eczaneler/tunceli'],
         63 => ['name' => 'Şanlıurfa', 'file' => 'Sanliurfa.php', 'class' => 'SanliurfaScraper', 'url' => 'https://www.sanliurfaeo.org.tr/nobetci-eczaneler'],
         64 => ['name' => 'Uşak', 'file' => 'Usak.php', 'class' => 'UsakScraper', 'url' => 'https://usakeczaciodasi.org.tr/usak-nobetci-eczaneler'],
-        65 => ['name' => 'Van', 'file' => 'Van.php', 'class' => 'VanScraper', 'url' => 'https://www.vaneczaciodasi.org.tr/'],
+        65 => ['name' => 'Van', 'file' => 'Van.php', 'class' => 'VanScraper', 'url' => 'https://www.vaneczaciodasi.org.tr/nobetci-eczaneler'],
         66 => ['name' => 'Yozgat', 'file' => 'Yozgat.php', 'class' => 'YozgatScraper', 'url' => 'https://www.yozgateo.org.tr/'],
         67 => ['name' => 'Zonguldak', 'file' => 'Zonguldak.php', 'class' => 'ZonguldakScraper', 'url' => 'https://www.zonguldakeo.org.tr/'],
         68 => ['name' => 'Aksaray', 'file' => 'Aksaray.php', 'class' => 'AksarayScraper', 'url' => 'https://www.aksarayeo.org.tr/'],
