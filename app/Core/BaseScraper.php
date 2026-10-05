@@ -226,6 +226,9 @@ abstract class BaseScraper
             }
 
             $rawTitle = strip_tags($titleMatch[1]);
+            if ($this->isBlacklistedTitle($rawTitle)) {
+                continue;
+            }
             if (empty(trim($rawTitle)) || !preg_match('/(?:ECZANE|Eczane)/iu', $rawTitle)) {
                 // If title doesn't contain Eczane, verify if it looks like a name
                 if (strlen(trim($rawTitle)) < 3 || strlen(trim($rawTitle)) > 50) {
@@ -304,6 +307,9 @@ abstract class BaseScraper
 
         foreach ($blocks as $b) {
             $name = Str::clean(strip_tags($b[1]));
+            if ($this->isBlacklistedTitle($name)) {
+                continue;
+            }
             $body = $b[2];
 
             // Extract phone
@@ -347,5 +353,29 @@ abstract class BaseScraper
         }
 
         return $this->filterPharmacies($pharmacies, $targetDistrict);
+    }
+
+    /**
+     * Check if a title candidate is a false positive (cookies, notices, navigation headers, etc.)
+     */
+    protected function isBlacklistedTitle(string $title): bool
+    {
+        $normalized = Str::lowerTr($title);
+        $blacklist = [
+            'cerez', 'çerez', 'kvkk', 'gdpr', 'gizlilik', 'ayarlari', 'ayarları',
+            'duyuru', 'duyurulari', 'duyuruları', 'teb duyuru', 'mevzuat', 'haberler',
+            'hakkimizda', 'hakkımızda', 'iletisim', 'iletişim', 'yonetim', 'yönetim',
+            'baskanimiz', 'başkanımız', 'etkinlik', 'menü', 'menu', 'giris', 'giriş',
+            'nobetci eczaneler', 'nöbetçi eczaneler', 'eczane islemleri', 'eczane işlemleri',
+            'arama sonuclari', 'arama sonuçları', 'e-kutuphane', 'e-kütüphane'
+        ];
+
+        foreach ($blacklist as $badWord) {
+            if (mb_strpos($normalized, $badWord) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
