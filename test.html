@@ -185,22 +185,22 @@
 
         <div class="stats-bar">
             <div class="stat-card">📌 Toplam İl: <span class="stat-val" id="totalCount">81</span></div>
-            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">8</span></div>
-            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">73</span></div>
+            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">11</span></div>
+            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">70</span></div>
         </div>
 
         <div class="filter-controls">
             <div class="btn-group">
                 <button class="filter-btn active" onclick="setFilter('all', this)">Tümü (81)</button>
-                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Düzeltilenler (8)</button>
-                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (73)</button>
+                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Doğrulanan / Düzeltilen (11)</button>
+                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (70)</button>
             </div>
             <input type="text" id="searchInput" class="search-box" placeholder="İl veya plaka ara (örn: Adana, 34)..." onkeyup="applyFilters()">
         </div>
 
         <div class="grid" id="cityGrid">
-            <!-- 01 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Adana" target="_blank"><span class="plate">01</span><span class="name">Adana</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 01 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Adana" target="_blank"><span class="plate">01</span><span class="name">Adana</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
             <!-- 02 DÜZELTİLDİ -->
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Adıyaman" target="_blank"><span class="plate">02</span><span class="name">Adıyaman</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 03 DÜZELTİLDİ -->
@@ -209,10 +209,10 @@
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Ağrı" target="_blank"><span class="plate">04</span><span class="name">Ağrı</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 05 DÜZELTİLDİ -->
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Amasya" target="_blank"><span class="plate">05</span><span class="name">Amasya</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
-            <!-- 06 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Ankara" target="_blank"><span class="plate">06</span><span class="name">Ankara</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 07 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Antalya" target="_blank"><span class="plate">07</span><span class="name">Antalya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 06 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Ankara" target="_blank"><span class="plate">06</span><span class="name">Ankara</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
+            <!-- 07 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Antalya" target="_blank"><span class="plate">07</span><span class="name">Antalya</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
             <!-- 08 DÜZELTİLDİ -->
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Artvin" target="_blank"><span class="plate">08</span><span class="name">Artvin</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 09 DÜZELTİLDİ -->
