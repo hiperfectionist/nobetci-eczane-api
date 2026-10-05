@@ -13,7 +13,7 @@ class CityRegistry
         1  => ['name' => 'Adana', 'file' => 'Adana.php', 'class' => 'AdanaScraper', 'url' => 'https://www.adanaeo.org.tr/nobetci-eczaneler'],
         2  => ['name' => 'Adıyaman', 'file' => 'Adiyaman.php', 'class' => 'AdiyamanScraper', 'url' => 'https://www.adiyamaneo.org.tr/'],
         3  => ['name' => 'Afyonkarahisar', 'file' => 'Afyonkarahisar.php', 'class' => 'AfyonkarahisarScraper', 'url' => 'https://www.afyoneczaciodasi.org.tr/nobetci-eczaneler'],
-        4  => ['name' => 'Ağrı', 'file' => 'Agri.php', 'class' => 'AgriScraper', 'url' => 'https://www.agrieczaciodasi.org.tr/'],
+        4  => ['name' => 'Ağrı', 'file' => 'Agri.php', 'class' => 'AgriScraper', 'url' => 'https://www.agrieo.org.tr/'],
         5  => ['name' => 'Amasya', 'file' => 'Amasya.php', 'class' => 'AmasyaScraper', 'url' => 'https://www.amasyaeo.org.tr/'],
         6  => ['name' => 'Ankara', 'file' => 'Ankara.php', 'class' => 'AnkaraScraper', 'url' => 'https://www.aeo.org.tr/nobetci-eczaneler'],
         7  => ['name' => 'Antalya', 'file' => 'Antalya.php', 'class' => 'AntalyaScraper', 'url' => 'https://www.antalyaeo.org.tr/tr/nobetci-eczaneler'],
