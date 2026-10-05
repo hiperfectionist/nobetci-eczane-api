@@ -17,7 +17,7 @@ class CityRegistry
         5  => ['name' => 'Amasya', 'file' => 'Amasya.php', 'class' => 'AmasyaScraper', 'url' => 'https://www.amasyaeo.org.tr/'],
         6  => ['name' => 'Ankara', 'file' => 'Ankara.php', 'class' => 'AnkaraScraper', 'url' => 'https://www.aeo.org.tr/nobetci-eczaneler'],
         7  => ['name' => 'Antalya', 'file' => 'Antalya.php', 'class' => 'AntalyaScraper', 'url' => 'https://www.antalyaeo.org.tr/tr/nobetci-eczaneler'],
-        8  => ['name' => 'Artvin', 'file' => 'Artvin.php', 'class' => 'ArtvinScraper', 'url' => 'https://www.artvineo.org.tr/'],
+        8  => ['name' => 'Artvin', 'file' => 'Artvin.php', 'class' => 'ArtvinScraper', 'url' => 'https://www.trabzoneczaciodasi.org.tr/nobetci-eczaneler/8'],
         9  => ['name' => 'Aydın', 'file' => 'Aydin.php', 'class' => 'AydinScraper', 'url' => 'https://www.aydineo.org.tr/'],
         10 => ['name' => 'Balıkesir', 'file' => 'Balikesir.php', 'class' => 'BalikesirScraper', 'url' => 'https://www.balikesireczaciodasi.org.tr/nobetci-eczaneler'],
         11 => ['name' => 'Bilecik', 'file' => 'Bilecik.php', 'class' => 'BilecikScraper', 'url' => 'https://www.bilecikeo.org.tr/'],
