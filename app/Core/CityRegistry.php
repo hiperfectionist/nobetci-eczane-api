@@ -55,17 +55,17 @@ class CityRegistry
         43 => ['name' => 'Kütahya', 'file' => 'Kutahya.php', 'class' => 'KutahyaScraper', 'url' => 'https://www.kutahyaeo.org.tr/nobetci-eczaneler'],
         44 => ['name' => 'Malatya', 'file' => 'Malatya.php', 'class' => 'MalatyaScraper', 'url' => 'https://www.malatyaeczaciodasi.org.tr/nobetci-eczaneler'],
         45 => ['name' => 'Manisa', 'file' => 'Manisa.php', 'class' => 'ManisaScraper', 'url' => 'https://www.manisaeczaciodasi.org.tr/nobetci-eczaneler'],
-        46 => ['name' => 'Kahramanmaraş', 'file' => 'Kahramanmaras.php', 'class' => 'KahramanmarasScraper', 'url' => 'https://www.kmaras.eo.org.tr/'],
-        47 => ['name' => 'Mardin', 'file' => 'Mardin.php', 'class' => 'MardinScraper', 'url' => 'https://www.mardineo.org.tr/'],
-        48 => ['name' => 'Muğla', 'file' => 'Mugla.php', 'class' => 'MuglaScraper', 'url' => 'https://www.muglaeo.org.tr/'],
-        49 => ['name' => 'Muş', 'file' => 'Mus.php', 'class' => 'MusScraper', 'url' => 'https://www.museo.org.tr/'],
-        50 => ['name' => 'Nevşehir', 'file' => 'Nevsehir.php', 'class' => 'NevsehirScraper', 'url' => 'https://www.nevsehireo.org.tr/'],
-        51 => ['name' => 'Niğde', 'file' => 'Nigde.php', 'class' => 'NigdeScraper', 'url' => 'https://www.nigdeeo.org.tr/'],
-        52 => ['name' => 'Ordu', 'file' => 'Ordu.php', 'class' => 'OrduScraper', 'url' => 'https://www.ordueo.org.tr/'],
-        53 => ['name' => 'Rize', 'file' => 'Rize.php', 'class' => 'RizeScraper', 'url' => 'https://www.rizeeo.org.tr/'],
+        46 => ['name' => 'Kahramanmaraş', 'file' => 'Kahramanmaras.php', 'class' => 'KahramanmarasScraper', 'url' => 'https://kahramanmaras.bel.tr/nobetci-eczaneler'],
+        47 => ['name' => 'Mardin', 'file' => 'Mardin.php', 'class' => 'MardinScraper', 'url' => 'https://www.mardineczaciodasi.org.tr/nobetci-eczaneler'],
+        48 => ['name' => 'Muğla', 'file' => 'Mugla.php', 'class' => 'MuglaScraper', 'url' => 'https://www.muglaeczaciodasi.org.tr/nobetci-eczaneler'],
+        49 => ['name' => 'Muş', 'file' => 'Mus.php', 'class' => 'MusScraper', 'url' => 'https://www.batmaneczaciodasi.org.tr/nobetci-eczaneler/49'],
+        50 => ['name' => 'Nevşehir', 'file' => 'Nevsehir.php', 'class' => 'NevsehirScraper', 'url' => 'https://www.nevsehireo.org.tr/nobetci-eczaneler'],
+        51 => ['name' => 'Niğde', 'file' => 'Nigde.php', 'class' => 'NigdeScraper', 'url' => 'https://www.neo.org.tr/nobetci-eczaneler'],
+        52 => ['name' => 'Ordu', 'file' => 'Ordu.php', 'class' => 'OrduScraper', 'url' => 'https://ordueczaciodasi.org.tr/nobetci-eczaneler/'],
+        53 => ['name' => 'Rize', 'file' => 'Rize.php', 'class' => 'RizeScraper', 'url' => 'https://www.rize.bel.tr/nobetci-eczaneler'],
         54 => ['name' => 'Sakarya', 'file' => 'Sakarya.php', 'class' => 'SakaryaScraper', 'url' => 'https://www.sakarya.bel.tr/a/EBelediye/NobetciEczaneler'],
-        55 => ['name' => 'Samsun', 'file' => 'Samsun.php', 'class' => 'SamsunScraper', 'url' => 'https://www.samsuneo.org.tr/'],
-        56 => ['name' => 'Siirt', 'file' => 'Siirt.php', 'class' => 'SiirtScraper', 'url' => 'https://www.siirteo.org.tr/'],
+        55 => ['name' => 'Samsun', 'file' => 'Samsun.php', 'class' => 'SamsunScraper', 'url' => 'https://www.samsuneczaciodasi.org.tr/nobetci-eczaneler'],
+        56 => ['name' => 'Siirt', 'file' => 'Siirt.php', 'class' => 'SiirtScraper', 'url' => 'https://siirteo.org.tr/nobetci-eczaneler'],
         57 => ['name' => 'Sinop', 'file' => 'Sinop.php', 'class' => 'SinopScraper', 'url' => 'https://www.sinopeo.org.tr/'],
         58 => ['name' => 'Sivas', 'file' => 'Sivas.php', 'class' => 'SivasScraper', 'url' => 'https://www.sivaseo.org.tr/'],
         59 => ['name' => 'Tekirdağ', 'file' => 'Tekirdag.php', 'class' => 'TekirdagScraper', 'url' => 'https://www.tekirdageo.org.tr/'],
@@ -112,9 +112,18 @@ class CityRegistry
 
         $querySlug = Str::slug($cleanQuery);
 
+        // First pass: exact match by name slug
         foreach (self::$cities as $plate => $city) {
             $nameSlug = Str::slug($city['name']);
-            if ($querySlug === $nameSlug || Str::contains($city['name'], $cleanQuery)) {
+            if ($querySlug === $nameSlug) {
+                $city['plate'] = $plate;
+                return $city;
+            }
+        }
+
+        // Second pass: partial / contains match
+        foreach (self::$cities as $plate => $city) {
+            if (Str::contains($city['name'], $cleanQuery)) {
                 $city['plate'] = $plate;
                 return $city;
             }

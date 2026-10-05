@@ -9,12 +9,11 @@ class MusScraper extends BaseScraper
 {
     protected string $cityName = 'Muş';
     protected int $plateCode = 49;
-    protected string $primaryUrl = 'https://www.museo.org.tr/';
-    protected array $fallbackUrls = array (
-  0 => 'https://museo.org.tr/',
-  1 => 'https://museo.org.tr/nobetci-eczaneler',
-  2 => 'https://www.museo.org.tr/nobetci-eczaneler',
-);
+    protected string $primaryUrl = 'https://www.batmaneczaciodasi.org.tr/nobetci-eczaneler/49';
+    protected array $fallbackUrls = [
+        'https://batmaneczaciodasi.org.tr/nobetci-eczaneler/49',
+        'https://www.batmaneczaciodasi.org.tr/nobetci-eczaneler'
+    ];
 
     public function scrape(?string $district = null): array
     {
@@ -33,12 +32,79 @@ class MusScraper extends BaseScraper
             return [];
         }
 
-        $pharmacies = $this->parseTebCards($html, $district);
+        if (!mb_check_encoding($html, 'UTF-8')) {
+            $html = mb_convert_encoding($html, 'UTF-8', 'ISO-8859-9');
+        }
+
+        $pharmacies = $this->parseMusCards($html);
+
+        if (empty($pharmacies)) {
+            $pharmacies = $this->parseTebCards($html, $district);
+        }
 
         if (empty($pharmacies)) {
             $pharmacies = $this->parseHeuristicCards($html, $district);
         }
 
         return $this->filterPharmacies($pharmacies, $district);
+    }
+
+    private function parseMusCards(string $html): array
+    {
+        $pharmacies = [];
+
+        if (preg_match_all('/<div[^>]*class=["\'][^"\']*nobetci[^"\']*["\'][^>]*>(.*?)<\/div>\s*<\/div>/is', $html, $cards)) {
+            foreach ($cards[1] as $cardBody) {
+                $name = '';
+                $distName = '';
+                if (preg_match('/<h4[^>]*class=["\']tred["\'][^>]*>\s*<strong[^>]*>(.*?)<\/strong>(?:\s*-\s*([^<]+))?<\/h4>/is', $cardBody, $mH4)) {
+                    $name = trim(strip_tags($mH4[1]));
+                    $distName = isset($mH4[2]) ? trim(strip_tags($mH4[2])) : '';
+                } elseif (preg_match('/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', $cardBody, $mH)) {
+                    $name = trim(strip_tags($mH[1]));
+                }
+
+                $name = preg_replace('/(\s+ECZANES[İI]|\s+ECZANE)$/ui', '', $name);
+
+                if (empty($name) || $this->isBlacklistedTitle($name)) {
+                    continue;
+                }
+
+                $address = '';
+                if (preg_match('/<i class=[\'"]fa fa-home[^\'"]*[\'"]><\/i>\s*(.*?)(?:<br\s*\/?>\s*<i class=[\'"]fa fa-phone|<\/p)/is', $cardBody, $mAddr)) {
+                    $address = trim(strip_tags(str_replace('<br>', ' ', $mAddr[1])));
+                }
+
+                $phone = '';
+                if (preg_match('/href=["\']tel:([^"\']+)["\']/i', $cardBody, $mPhone)) {
+                    $phone = preg_replace('/[^\d]/', '', $mPhone[1]);
+                } elseif (preg_match('/<i class=[\'"]fa fa-phone[^\'"]*[\'"]><\/i>\s*([^<]+)/i', $cardBody, $mPhone2)) {
+                    $phone = preg_replace('/[^\d]/', '', $mPhone2[1]);
+                }
+
+                $maps = null;
+                $latitude = null;
+                $longitude = null;
+                if (preg_match('/href=["\'](https?:\/\/[^"\']*maps[^"\']*)["\']/i', $cardBody, $mMaps)) {
+                    $maps = html_entity_decode($mMaps[1]);
+                    if (preg_match('/q=([0-9.]+),([0-9.]+)/i', $maps, $mCoords)) {
+                        $latitude = (float) $mCoords[1];
+                        $longitude = (float) $mCoords[2];
+                    }
+                }
+
+                $pharmacies[] = [
+                    'name'       => $name,
+                    'district'   => $distName,
+                    'address'    => $address,
+                    'phone'      => $phone,
+                    'latitude'   => $latitude,
+                    'longitude'  => $longitude,
+                    'maps_url'   => $maps
+                ];
+            }
+        }
+
+        return $pharmacies;
     }
 }

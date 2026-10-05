@@ -185,15 +185,15 @@
 
         <div class="stats-bar">
             <div class="stat-card">📌 Toplam İl: <span class="stat-val" id="totalCount">81</span></div>
-            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">33</span></div>
-            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">48</span></div>
+            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">45</span></div>
+            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">36</span></div>
         </div>
 
         <div class="filter-controls">
             <div class="btn-group">
                 <button class="filter-btn active" onclick="setFilter('all', this)">Tümü (81)</button>
-                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Doğrulanan / Düzeltilen (33)</button>
-                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (48)</button>
+                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Doğrulanan / Düzeltilen (45)</button>
+                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (36)</button>
             </div>
             <input type="text" id="searchInput" class="search-box" placeholder="İl veya plaka ara (örn: Adana, 34)..." onkeyup="applyFilters()">
         </div>
@@ -255,8 +255,8 @@
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Gaziantep" target="_blank"><span class="plate">27</span><span class="name">Gaziantep</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
             <!-- 28 DÜZELTİLDİ -->
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Giresun" target="_blank"><span class="plate">28</span><span class="name">Giresun</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
-            <!-- 29 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Gümüşhane" target="_blank"><span class="plate">29</span><span class="name">Gümüşhane</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 29 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Gümüşhane" target="_blank"><span class="plate">29</span><span class="name">Gümüşhane</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
             <!-- 30 -->
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Hakkari" target="_blank"><span class="plate">30</span><span class="name">Hakkari</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
             <!-- 31 DÜZELTİLDİ -->
@@ -289,28 +289,28 @@
             <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Malatya" target="_blank"><span class="plate">44</span><span class="name">Malatya</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 45 -->
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Manisa" target="_blank"><span class="plate">45</span><span class="name">Manisa</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 46 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kahramanmaraş" target="_blank"><span class="plate">46</span><span class="name">Kahramanmaraş</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 47 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Mardin" target="_blank"><span class="plate">47</span><span class="name">Mardin</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 48 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Muğla" target="_blank"><span class="plate">48</span><span class="name">Muğla</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 49 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Muş" target="_blank"><span class="plate">49</span><span class="name">Muş</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 50 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Nevşehir" target="_blank"><span class="plate">50</span><span class="name">Nevşehir</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 51 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Niğde" target="_blank"><span class="plate">51</span><span class="name">Niğde</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 52 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Ordu" target="_blank"><span class="plate">52</span><span class="name">Ordu</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 53 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Rize" target="_blank"><span class="plate">53</span><span class="name">Rize</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 54 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sakarya" target="_blank"><span class="plate">54</span><span class="name">Sakarya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 55 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Samsun" target="_blank"><span class="plate">55</span><span class="name">Samsun</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
-            <!-- 56 -->
-            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Siirt" target="_blank"><span class="plate">56</span><span class="name">Siirt</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 46 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Kahramanmaraş" target="_blank"><span class="plate">46</span><span class="name">Kahramanmaraş</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 47 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Mardin" target="_blank"><span class="plate">47</span><span class="name">Mardin</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 48 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Muğla" target="_blank"><span class="plate">48</span><span class="name">Muğla</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 49 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Muş" target="_blank"><span class="plate">49</span><span class="name">Muş</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 50 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Nevşehir" target="_blank"><span class="plate">50</span><span class="name">Nevşehir</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 51 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Niğde" target="_blank"><span class="plate">51</span><span class="name">Niğde</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 52 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Ordu" target="_blank"><span class="plate">52</span><span class="name">Ordu</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 53 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Rize" target="_blank"><span class="plate">53</span><span class="name">Rize</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 54 DOĞRULANDI -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Sakarya" target="_blank"><span class="plate">54</span><span class="name">Sakarya</span><span class="badge fixed">✅ Başarılı</span><span class="action">Aç ↗</span></a>
+            <!-- 55 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Samsun" target="_blank"><span class="plate">55</span><span class="name">Samsun</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 56 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Siirt" target="_blank"><span class="plate">56</span><span class="name">Siirt</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
             <!-- 57 -->
             <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sinop" target="_blank"><span class="plate">57</span><span class="name">Sinop</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
             <!-- 58 -->
