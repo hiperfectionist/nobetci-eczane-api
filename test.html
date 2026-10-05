@@ -7,10 +7,15 @@
     <style>
         :root {
             --primary: #2563eb;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --border: #e2e8f0;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.12);
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -20,46 +25,94 @@
             padding: 24px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
         }
         h1 {
-            color: #0f172a;
-            margin-bottom: 8px;
+            color: #38bdf8;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 12px;
+            font-size: 26px;
         }
         p.subtitle {
-            color: #64748b;
+            color: var(--muted);
             margin-top: 0;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
-        .search-box {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 16px;
-            font-size: 16px;
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
-            margin-bottom: 24px;
-            box-sizing: border-box;
+            padding: 10px 18px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-val {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #2563eb;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+        .search-box {
+            padding: 10px 14px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
             outline: none;
+            width: 280px;
         }
         .search-box:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            border-color: #38bdf8;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 10px;
         }
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 12px 16px;
+            padding: 11px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -68,158 +121,271 @@
             transition: all 0.15s ease;
         }
         .card:hover {
-            border-color: var(--primary);
-            background: #f1f5f9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        /* Fixed & Verified Style */
+        .card.is-fixed {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #1e293b 0%, #064e3b 160%);
+        }
+        .card.is-fixed:hover {
+            border-color: #34d399;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
         }
         .plate {
-            background: #e0e7ff;
-            color: #3730a3;
+            background: #334155;
+            color: #93c5fd;
             font-weight: 700;
             font-size: 13px;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 5px;
             min-width: 24px;
             text-align: center;
         }
+        .is-fixed .plate {
+            background: #065f46;
+            color: #6ee7b7;
+        }
         .name {
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14.5px;
             flex: 1;
-            margin-left: 12px;
+            margin-left: 10px;
+        }
+        .badge {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        .badge.fixed {
+            background: #065f46;
+            color: #34d399;
+            border: 1px solid #10b981;
+        }
+        .badge.pending {
+            background: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
         }
         .action {
             font-size: 12px;
-            color: var(--primary);
+            color: #38bdf8;
             font-weight: 500;
-        }
-        .quick-links {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .quick-btn {
-            background: #0f172a;
-            color: #fff;
-            padding: 8px 14px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .quick-btn:hover {
-            background: #334155;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🏥 81 İl Nöbetçi Eczane API Test Paneli</h1>
-        <p class="subtitle">Aşağıdaki bağlantılara tıklayarak her ilin API çıktısını yeni sekmede canlı JSON olarak açabilirsiniz.</p>
+        <p class="subtitle">API Adresi: <code>http://127.0.0.1:8088</code> — Tıkladığınız il yeni sekmede canlı JSON olarak açılır.</p>
 
-        <div class="quick-links">
-            <a class="quick-btn" href="http://127.0.0.1:8088/?sehir=list" target="_blank">📋 Tüm İlleri JSON Olarak Listele</a>
-            <a class="quick-btn" href="http://127.0.0.1:8088/?sehir=İstanbul&ilce=Kadıköy" target="_blank">📍 İstanbul / Kadıköy Testi</a>
-            <a class="quick-btn" href="http://127.0.0.1:8088/?sehir=Ankara&ilce=Çankaya" target="_blank">📍 Ankara / Çankaya Testi</a>
-            <a class="quick-btn" href="http://127.0.0.1:8088/?sehir=İzmir&ilce=Konak" target="_blank">📍 İzmir / Konak Testi</a>
+        <div class="stats-bar">
+            <div class="stat-card">📌 Toplam İl: <span class="stat-val" id="totalCount">81</span></div>
+            <div class="stat-card" style="border-color: #10b981; color: #34d399;">✅ Düzeltilen / Doğrulanan: <span class="stat-val" id="fixedCount">8</span></div>
+            <div class="stat-card" style="border-color: #64748b; color: #cbd5e1;">⏳ Kontrol Edilecek: <span class="stat-val" id="pendingCount">73</span></div>
         </div>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="İl veya plaka ara (örn: Adana, 34, Bursa)..." onkeyup="filterCities()">
+        <div class="filter-controls">
+            <div class="btn-group">
+                <button class="filter-btn active" onclick="setFilter('all', this)">Tümü (81)</button>
+                <button class="filter-btn" onclick="setFilter('fixed', this)">✅ Düzeltilenler (8)</button>
+                <button class="filter-btn" onclick="setFilter('pending', this)">⏳ Kontrol Edilecek (73)</button>
+            </div>
+            <input type="text" id="searchInput" class="search-box" placeholder="İl veya plaka ara (örn: Adana, 34)..." onkeyup="applyFilters()">
+        </div>
 
         <div class="grid" id="cityGrid">
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Adana" target="_blank"><span class="plate">01</span><span class="name">Adana</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Adıyaman" target="_blank"><span class="plate">02</span><span class="name">Adıyaman</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Afyonkarahisar" target="_blank"><span class="plate">03</span><span class="name">Afyonkarahisar</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Ağrı" target="_blank"><span class="plate">04</span><span class="name">Ağrı</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Amasya" target="_blank"><span class="plate">05</span><span class="name">Amasya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Ankara" target="_blank"><span class="plate">06</span><span class="name">Ankara</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Antalya" target="_blank"><span class="plate">07</span><span class="name">Antalya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Artvin" target="_blank"><span class="plate">08</span><span class="name">Artvin</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Aydın" target="_blank"><span class="plate">09</span><span class="name">Aydın</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Balıkesir" target="_blank"><span class="plate">10</span><span class="name">Balıkesir</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bilecik" target="_blank"><span class="plate">11</span><span class="name">Bilecik</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bingöl" target="_blank"><span class="plate">12</span><span class="name">Bingöl</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bitlis" target="_blank"><span class="plate">13</span><span class="name">Bitlis</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bolu" target="_blank"><span class="plate">14</span><span class="name">Bolu</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Burdur" target="_blank"><span class="plate">15</span><span class="name">Burdur</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bursa" target="_blank"><span class="plate">16</span><span class="name">Bursa</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Çanakkale" target="_blank"><span class="plate">17</span><span class="name">Çanakkale</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Çankırı" target="_blank"><span class="plate">18</span><span class="name">Çankırı</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Çorum" target="_blank"><span class="plate">19</span><span class="name">Çorum</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Denizli" target="_blank"><span class="plate">20</span><span class="name">Denizli</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Diyarbakır" target="_blank"><span class="plate">21</span><span class="name">Diyarbakır</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Edirne" target="_blank"><span class="plate">22</span><span class="name">Edirne</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Elazığ" target="_blank"><span class="plate">23</span><span class="name">Elazığ</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Erzincan" target="_blank"><span class="plate">24</span><span class="name">Erzincan</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Erzurum" target="_blank"><span class="plate">25</span><span class="name">Erzurum</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Eskişehir" target="_blank"><span class="plate">26</span><span class="name">Eskişehir</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Gaziantep" target="_blank"><span class="plate">27</span><span class="name">Gaziantep</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Giresun" target="_blank"><span class="plate">28</span><span class="name">Giresun</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Gümüşhane" target="_blank"><span class="plate">29</span><span class="name">Gümüşhane</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Hakkari" target="_blank"><span class="plate">30</span><span class="name">Hakkari</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Hatay" target="_blank"><span class="plate">31</span><span class="name">Hatay</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Isparta" target="_blank"><span class="plate">32</span><span class="name">Isparta</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Mersin" target="_blank"><span class="plate">33</span><span class="name">Mersin</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=İstanbul" target="_blank"><span class="plate">34</span><span class="name">İstanbul</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=İzmir" target="_blank"><span class="plate">35</span><span class="name">İzmir</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kars" target="_blank"><span class="plate">36</span><span class="name">Kars</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kastamonu" target="_blank"><span class="plate">37</span><span class="name">Kastamonu</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kayseri" target="_blank"><span class="plate">38</span><span class="name">Kayseri</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kırklareli" target="_blank"><span class="plate">39</span><span class="name">Kırklareli</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kırşehir" target="_blank"><span class="plate">40</span><span class="name">Kırşehir</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kocaeli" target="_blank"><span class="plate">41</span><span class="name">Kocaeli</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Konya" target="_blank"><span class="plate">42</span><span class="name">Konya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kütahya" target="_blank"><span class="plate">43</span><span class="name">Kütahya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Malatya" target="_blank"><span class="plate">44</span><span class="name">Malatya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Manisa" target="_blank"><span class="plate">45</span><span class="name">Manisa</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kahramanmaraş" target="_blank"><span class="plate">46</span><span class="name">Kahramanmaraş</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Mardin" target="_blank"><span class="plate">47</span><span class="name">Mardin</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Muğla" target="_blank"><span class="plate">48</span><span class="name">Muğla</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Muş" target="_blank"><span class="plate">49</span><span class="name">Muş</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Nevşehir" target="_blank"><span class="plate">50</span><span class="name">Nevşehir</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Niğde" target="_blank"><span class="plate">51</span><span class="name">Niğde</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Ordu" target="_blank"><span class="plate">52</span><span class="name">Ordu</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Rize" target="_blank"><span class="plate">53</span><span class="name">Rize</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Sakarya" target="_blank"><span class="plate">54</span><span class="name">Sakarya</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Samsun" target="_blank"><span class="plate">55</span><span class="name">Samsun</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Siirt" target="_blank"><span class="plate">56</span><span class="name">Siirt</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Sinop" target="_blank"><span class="plate">57</span><span class="name">Sinop</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Sivas" target="_blank"><span class="plate">58</span><span class="name">Sivas</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Tekirdağ" target="_blank"><span class="plate">59</span><span class="name">Tekirdağ</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Tokat" target="_blank"><span class="plate">60</span><span class="name">Tokat</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Trabzon" target="_blank"><span class="plate">61</span><span class="name">Trabzon</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Tunceli" target="_blank"><span class="plate">62</span><span class="name">Tunceli</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Şanlıurfa" target="_blank"><span class="plate">63</span><span class="name">Şanlıurfa</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Uşak" target="_blank"><span class="plate">64</span><span class="name">Uşak</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Van" target="_blank"><span class="plate">65</span><span class="name">Van</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Yozgat" target="_blank"><span class="plate">66</span><span class="name">Yozgat</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Zonguldak" target="_blank"><span class="plate">67</span><span class="name">Zonguldak</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Aksaray" target="_blank"><span class="plate">68</span><span class="name">Aksaray</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bayburt" target="_blank"><span class="plate">69</span><span class="name">Bayburt</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Karaman" target="_blank"><span class="plate">70</span><span class="name">Karaman</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kırıkkale" target="_blank"><span class="plate">71</span><span class="name">Kırıkkale</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Batman" target="_blank"><span class="plate">72</span><span class="name">Batman</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Şırnak" target="_blank"><span class="plate">73</span><span class="name">Şırnak</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Bartın" target="_blank"><span class="plate">74</span><span class="name">Bartın</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Ardahan" target="_blank"><span class="plate">75</span><span class="name">Ardahan</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Iğdır" target="_blank"><span class="plate">76</span><span class="name">Iğdır</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Yalova" target="_blank"><span class="plate">77</span><span class="name">Yalova</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Karabük" target="_blank"><span class="plate">78</span><span class="name">Karabük</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Kilis" target="_blank"><span class="plate">79</span><span class="name">Kilis</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Osmaniye" target="_blank"><span class="plate">80</span><span class="name">Osmaniye</span><span class="action">Aç ↗</span></a>
-            <a class="card" href="http://127.0.0.1:8088/?sehir=Düzce" target="_blank"><span class="plate">81</span><span class="name">Düzce</span><span class="action">Aç ↗</span></a>
+            <!-- 01 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Adana" target="_blank"><span class="plate">01</span><span class="name">Adana</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 02 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Adıyaman" target="_blank"><span class="plate">02</span><span class="name">Adıyaman</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 03 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Afyonkarahisar" target="_blank"><span class="plate">03</span><span class="name">Afyonkarahisar</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 04 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Ağrı" target="_blank"><span class="plate">04</span><span class="name">Ağrı</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 05 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Amasya" target="_blank"><span class="plate">05</span><span class="name">Amasya</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 06 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Ankara" target="_blank"><span class="plate">06</span><span class="name">Ankara</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 07 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Antalya" target="_blank"><span class="plate">07</span><span class="name">Antalya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 08 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Artvin" target="_blank"><span class="plate">08</span><span class="name">Artvin</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 09 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Aydın" target="_blank"><span class="plate">09</span><span class="name">Aydın</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 10 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Balıkesir" target="_blank"><span class="plate">10</span><span class="name">Balıkesir</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 11 DÜZELTİLDİ -->
+            <a class="card is-fixed" data-status="fixed" href="http://127.0.0.1:8088/?sehir=Bilecik" target="_blank"><span class="plate">11</span><span class="name">Bilecik</span><span class="badge fixed">✅ Düzeltildi</span><span class="action">Aç ↗</span></a>
+            <!-- 12 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bingöl" target="_blank"><span class="plate">12</span><span class="name">Bingöl</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 13 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bitlis" target="_blank"><span class="plate">13</span><span class="name">Bitlis</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 14 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bolu" target="_blank"><span class="plate">14</span><span class="name">Bolu</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 15 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Burdur" target="_blank"><span class="plate">15</span><span class="name">Burdur</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 16 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bursa" target="_blank"><span class="plate">16</span><span class="name">Bursa</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 17 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Çanakkale" target="_blank"><span class="plate">17</span><span class="name">Çanakkale</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 18 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Çankırı" target="_blank"><span class="plate">18</span><span class="name">Çankırı</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 19 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Çorum" target="_blank"><span class="plate">19</span><span class="name">Çorum</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 20 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Denizli" target="_blank"><span class="plate">20</span><span class="name">Denizli</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 21 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Diyarbakır" target="_blank"><span class="plate">21</span><span class="name">Diyarbakır</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 22 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Edirne" target="_blank"><span class="plate">22</span><span class="name">Edirne</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 23 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Elazığ" target="_blank"><span class="plate">23</span><span class="name">Elazığ</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 24 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Erzincan" target="_blank"><span class="plate">24</span><span class="name">Erzincan</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 25 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Erzurum" target="_blank"><span class="plate">25</span><span class="name">Erzurum</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 26 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Eskişehir" target="_blank"><span class="plate">26</span><span class="name">Eskişehir</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 27 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Gaziantep" target="_blank"><span class="plate">27</span><span class="name">Gaziantep</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 28 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Giresun" target="_blank"><span class="plate">28</span><span class="name">Giresun</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 29 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Gümüşhane" target="_blank"><span class="plate">29</span><span class="name">Gümüşhane</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 30 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Hakkari" target="_blank"><span class="plate">30</span><span class="name">Hakkari</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 31 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Hatay" target="_blank"><span class="plate">31</span><span class="name">Hatay</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 32 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Isparta" target="_blank"><span class="plate">32</span><span class="name">Isparta</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 33 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Mersin" target="_blank"><span class="plate">33</span><span class="name">Mersin</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 34 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=İstanbul" target="_blank"><span class="plate">34</span><span class="name">İstanbul</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 35 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=İzmir" target="_blank"><span class="plate">35</span><span class="name">İzmir</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 36 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kars" target="_blank"><span class="plate">36</span><span class="name">Kars</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 37 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kastamonu" target="_blank"><span class="plate">37</span><span class="name">Kastamonu</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 38 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kayseri" target="_blank"><span class="plate">38</span><span class="name">Kayseri</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 39 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kırklareli" target="_blank"><span class="plate">39</span><span class="name">Kırklareli</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 40 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kırşehir" target="_blank"><span class="plate">40</span><span class="name">Kırşehir</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 41 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kocaeli" target="_blank"><span class="plate">41</span><span class="name">Kocaeli</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 42 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Konya" target="_blank"><span class="plate">42</span><span class="name">Konya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 43 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kütahya" target="_blank"><span class="plate">43</span><span class="name">Kütahya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 44 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Malatya" target="_blank"><span class="plate">44</span><span class="name">Malatya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 45 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Manisa" target="_blank"><span class="plate">45</span><span class="name">Manisa</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 46 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kahramanmaraş" target="_blank"><span class="plate">46</span><span class="name">Kahramanmaraş</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 47 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Mardin" target="_blank"><span class="plate">47</span><span class="name">Mardin</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 48 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Muğla" target="_blank"><span class="plate">48</span><span class="name">Muğla</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 49 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Muş" target="_blank"><span class="plate">49</span><span class="name">Muş</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 50 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Nevşehir" target="_blank"><span class="plate">50</span><span class="name">Nevşehir</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 51 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Niğde" target="_blank"><span class="plate">51</span><span class="name">Niğde</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 52 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Ordu" target="_blank"><span class="plate">52</span><span class="name">Ordu</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 53 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Rize" target="_blank"><span class="plate">53</span><span class="name">Rize</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 54 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sakarya" target="_blank"><span class="plate">54</span><span class="name">Sakarya</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 55 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Samsun" target="_blank"><span class="plate">55</span><span class="name">Samsun</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 56 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Siirt" target="_blank"><span class="plate">56</span><span class="name">Siirt</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 57 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sinop" target="_blank"><span class="plate">57</span><span class="name">Sinop</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 58 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Sivas" target="_blank"><span class="plate">58</span><span class="name">Sivas</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 59 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Tekirdağ" target="_blank"><span class="plate">59</span><span class="name">Tekirdağ</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 60 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Tokat" target="_blank"><span class="plate">60</span><span class="name">Tokat</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 61 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Trabzon" target="_blank"><span class="plate">61</span><span class="name">Trabzon</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 62 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Tunceli" target="_blank"><span class="plate">62</span><span class="name">Tunceli</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 63 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Şanlıurfa" target="_blank"><span class="plate">63</span><span class="name">Şanlıurfa</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 64 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Uşak" target="_blank"><span class="plate">64</span><span class="name">Uşak</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 65 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Van" target="_blank"><span class="plate">65</span><span class="name">Van</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 66 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Yozgat" target="_blank"><span class="plate">66</span><span class="name">Yozgat</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 67 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Zonguldak" target="_blank"><span class="plate">67</span><span class="name">Zonguldak</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 68 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Aksaray" target="_blank"><span class="plate">68</span><span class="name">Aksaray</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 69 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bayburt" target="_blank"><span class="plate">69</span><span class="name">Bayburt</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 70 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Karaman" target="_blank"><span class="plate">70</span><span class="name">Karaman</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 71 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kırıkkale" target="_blank"><span class="plate">71</span><span class="name">Kırıkkale</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 72 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Batman" target="_blank"><span class="plate">72</span><span class="name">Batman</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 73 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Şırnak" target="_blank"><span class="plate">73</span><span class="name">Şırnak</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 74 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Bartın" target="_blank"><span class="plate">74</span><span class="name">Bartın</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 75 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Ardahan" target="_blank"><span class="plate">75</span><span class="name">Ardahan</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 76 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Iğdır" target="_blank"><span class="plate">76</span><span class="name">Iğdır</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 77 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Yalova" target="_blank"><span class="plate">77</span><span class="name">Yalova</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 78 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Karabük" target="_blank"><span class="plate">78</span><span class="name">Karabük</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 79 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Kilis" target="_blank"><span class="plate">79</span><span class="name">Kilis</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 80 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Osmaniye" target="_blank"><span class="plate">80</span><span class="name">Osmaniye</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
+            <!-- 81 -->
+            <a class="card" data-status="pending" href="http://127.0.0.1:8088/?sehir=Düzce" target="_blank"><span class="plate">81</span><span class="name">Düzce</span><span class="badge pending">Test Edilecek</span><span class="action">Aç ↗</span></a>
         </div>
     </div>
 
     <script>
-        function filterCities() {
+        let currentFilter = 'all';
+
+        function setFilter(type, btn) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            applyFilters();
+        }
+
+        function applyFilters() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.card');
+            
             cards.forEach(card => {
+                const status = card.getAttribute('data-status');
                 const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(query) ? 'flex' : 'none';
+                
+                const matchesFilter = (currentFilter === 'all') || (status === currentFilter);
+                const matchesSearch = text.includes(query);
+
+                card.style.display = (matchesFilter && matchesSearch) ? 'flex' : 'none';
             });
         }
     </script>
