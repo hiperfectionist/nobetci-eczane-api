@@ -1,0 +1,11 @@
+# Cache files
+cache/*.cache
+!cache/.gitkeep
+
+# Temporary & Log files
+*.log
+*.tmp
+
+# OS files
+Thumbs.db
+.DS_Store
